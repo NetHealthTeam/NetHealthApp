@@ -11,30 +11,28 @@ struct Welcome: View {
     var body: some View {
         VStack {
             LoginHeaderView(h1Text: "NetHealth", h2Text: "Welcome to")
-            .padding()
+                .padding()
             Spacer()
-            Image("Welcome_boy")
+            Image("Welcome")
             Spacer()
             VStack {
                 // Sign Up Button
-                Button {
-                    
-                } label: {
+                NavigationLink(destination: Signup()
+                                .navigationBarHidden(true),
+                               label: {
                     Text("Sign Up")
-                }
-                .buttonStyle(FilledButtonStyle())
+                })
+                    .buttonStyle(FilledButtonStyle())
                 
                 // Login Button
-                Button {
-                    
-                } label: {
+                NavigationLink(destination: Login()
+                                .navigationBarHidden(true)
+                ) {
                     Text("Login")
                 }
                 .buttonStyle(EmptyButtonStyle())
             }
             Spacer()
-            
-            
             
         }
         .padding(.horizontal, 24)

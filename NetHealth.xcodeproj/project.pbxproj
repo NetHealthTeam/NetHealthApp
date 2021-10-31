@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2C020F53271E21C800FBFCC8 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C020F52271E21C800FBFCC8 /* Login.swift */; };
+		2C29E1442727483D008431AE /* Signup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C29E1432727483D008431AE /* Signup.swift */; };
+		2CB4037B272189BD001001D6 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4037A272189BD001001D6 /* LoginViewModel.swift */; };
 		2CC1B1AB271F393800EDA9FC /* LoginHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC1B1AA271F393800EDA9FC /* LoginHeaderView.swift */; };
 		2CC1B1AF271F3ADA00EDA9FC /* NHTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC1B1AE271F3ADA00EDA9FC /* NHTextField.swift */; };
 		2CC1B1B1271F3C0D00EDA9FC /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC1B1B0271F3C0D00EDA9FC /* View.swift */; };
@@ -22,6 +24,8 @@
 
 /* Begin PBXFileReference section */
 		2C020F52271E21C800FBFCC8 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		2C29E1432727483D008431AE /* Signup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signup.swift; sourceTree = "<group>"; };
+		2CB4037A272189BD001001D6 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		2CC1B1AA271F393800EDA9FC /* LoginHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHeaderView.swift; sourceTree = "<group>"; };
 		2CC1B1AE271F3ADA00EDA9FC /* NHTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NHTextField.swift; sourceTree = "<group>"; };
 		2CC1B1B0271F3C0D00EDA9FC /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
@@ -104,6 +108,7 @@
 		2CC52BAF271C39FC00E65877 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				2CB4037A272189BD001001D6 /* LoginViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -113,6 +118,7 @@
 			children = (
 				2CC52BB1271C3A6500E65877 /* Welcome.swift */,
 				2C020F52271E21C800FBFCC8 /* Login.swift */,
+				2C29E1432727483D008431AE /* Signup.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -246,6 +252,8 @@
 				2CC1B1B1271F3C0D00EDA9FC /* View.swift in Sources */,
 				2CC1B1AB271F393800EDA9FC /* LoginHeaderView.swift in Sources */,
 				2CC7666B271D8D0800F4B5B7 /* EmptyButtonStyle.swift in Sources */,
+				2C29E1442727483D008431AE /* Signup.swift in Sources */,
+				2CB4037B272189BD001001D6 /* LoginViewModel.swift in Sources */,
 				2CDB9232271B7C47000F3BFA /* NetHealthApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,29 +1,39 @@
 //
-//  Login.swift
+//  Signup.swift
 //  NetHealth
 //
-//  Created by Anday on 18.10.21.
+//  Created by Anday on 25.10.21.
 //
 
 import SwiftUI
 
-struct Login: View {
+struct Signup: View {
     @State private var input: String = ""
     var body: some View {
         VStack {
-            LoginHeaderView(h1Text: "Login", h2Text: "Welcome Back")
+            LoginHeaderView(h1Text: "Sign Up", h2Text: "Hello Beautiful")
                 .padding()
             Spacer()
-            Image("Welcome")
+            Image("SignUp")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                
             Spacer()
-            
             
             // Inputs
             VStack {
+                TextField("Full Name", text: $input)
+                    .NHTextFieldStyle()
+                    .padding(.bottom, 8)
+                
                 TextField("Email", text: $input)
+                    .NHTextFieldStyle()
+                    .padding(.bottom, 8)
+                
+                TextField("Age", text: $input)
+                    .NHTextFieldStyle()
+                    .padding(.bottom, 8)
+                
+                TextField("Gender", text: $input)
                     .NHTextFieldStyle()
                     .padding(.bottom, 8)
                 
@@ -33,53 +43,48 @@ struct Login: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.accentColor.opacity(0.2), lineWidth: 1)
                     )
+                
+                SecureField("Confirm Password", text: $input)
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.accentColor.opacity(0.2), lineWidth: 1)
+                    )
             }
-            
-            // Forgot Password?
-            HStack {
-                Spacer()
-                Text("Forgot Password?")
-                    .font(.callout)
-                    .foregroundColor(.accentColor)
-            }
-            
-            
-            
             
             Button(action: {
                 
             }, label: {
-                Text("Login")
+                Text("Sign Up")
                 
             })
                 .buttonStyle(FilledButtonStyle())
                 .padding(.vertical, 24)
             
             
-            
-            // Don't have an account? Sign Up
+            // Already have an account? Login
             HStack {
-                Text("Don't have an account?")
+                Text("Already have an account")
                     .font(.callout)
                     .foregroundColor(.accentColor.opacity(0.6))
-                NavigationLink(destination: Signup()
+                
+                NavigationLink(destination: Login()
                                 .navigationBarHidden(true)) {
-                    Text("Sign Up")
+                    Text("Login")
                         .font(.callout)
                         .foregroundColor(.accentColor)
                 }
-                .buttonStyle(PlainButtonStyle())
+                                .buttonStyle(PlainButtonStyle())
             }
             
             Spacer()
         }
         .padding(.horizontal, 24)
-        
     }
 }
 
-struct Login_Previews: PreviewProvider {
+struct Signup_Previews: PreviewProvider {
     static var previews: some View {
-        Login()
+        Signup()
     }
 }
