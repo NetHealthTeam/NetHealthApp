@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct Login: View {
-    @State private var input: String = ""
+    @StateObject private var vm: LoginViewModel = LoginViewModel()
+    @EnvironmentObject private var userSettingsStorage: UserSettings
+    
     var body: some View {
         VStack {
             LoginHeaderView(h1Text: "Login", h2Text: "Welcome Back")
@@ -23,11 +25,11 @@ struct Login: View {
             
             // Inputs
             VStack {
-                TextField("Email", text: $input)
+                TextField("Email", text: $vm.email)
                     .NHTextFieldStyle()
                     .padding(.bottom, 8)
                 
-                SecureField("Password", text: $input)
+                SecureField("Password", text: $vm.password)
                     .padding()
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
@@ -47,7 +49,7 @@ struct Login: View {
             
             
             Button(action: {
-                
+                vm.proceedLogin(userSettingsStorage: userSettingsStorage)
             }, label: {
                 Text("Login")
                 

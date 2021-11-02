@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Signup: View {
-    @State private var input: String = ""
+    @StateObject private var vm: SignupViewModel = SignupViewModel()
     var body: some View {
         VStack {
             LoginHeaderView(h1Text: "Sign Up", h2Text: "Hello Beautiful")
@@ -21,30 +21,42 @@ struct Signup: View {
             
             // Inputs
             VStack {
-                TextField("Full Name", text: $input)
+                TextField("Full Name", text: $vm.fullName)
                     .NHTextFieldStyle()
                     .padding(.bottom, 8)
                 
-                TextField("Email", text: $input)
+                TextField("Email", text: $vm.email)
                     .NHTextFieldStyle()
                     .padding(.bottom, 8)
                 
-                TextField("Age", text: $input)
+                
+                TextField("Age", text: $vm.age)
+                    .keyboardType(.numberPad)
                     .NHTextFieldStyle()
                     .padding(.bottom, 8)
+
+                Picker(selection: $vm.gender) {
+                    ForEach(Gender.allCases, id: \.self) { val in
+                        Text(val.rawValue).tag(val.rawValue)
+                    }
+                } label: {
+                    HStack {
+                        Text("Gender")
+                        Spacer()
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.bottom, 8)
                 
-                TextField("Gender", text: $input)
-                    .NHTextFieldStyle()
-                    .padding(.bottom, 8)
                 
-                SecureField("Password", text: $input)
+                SecureField("Password", text: $vm.password)
                     .padding()
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.accentColor.opacity(0.2), lineWidth: 1)
                     )
                 
-                SecureField("Confirm Password", text: $input)
+                SecureField("Confirm Password", text: $vm.passwordConfirmation)
                     .padding()
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
