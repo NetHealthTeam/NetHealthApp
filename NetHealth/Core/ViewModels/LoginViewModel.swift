@@ -15,7 +15,7 @@ class LoginViewModel: ObservableObject {
     
     func proceedLogin(userSettingsStorage: UserSettings) {
         // Send credentials to server
-        Webservice().login(email: email, password: password) { res in
+        Webservice.instance.login(email: email, password: password) { res in
             switch res {
             case .success(let token):
                 print(token)

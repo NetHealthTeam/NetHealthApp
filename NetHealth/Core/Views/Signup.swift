@@ -49,6 +49,7 @@ struct Signup: View {
                 .padding(.bottom, 8)
                 
                 
+                
                 SecureField("Password", text: $vm.password)
                     .padding()
                     .overlay(
@@ -64,14 +65,12 @@ struct Signup: View {
                     )
             }
             
-            Button(action: {
-                
-            }, label: {
+            
+            NavigationLink(destination: Goal(vm: vm)){
                 Text("Sign Up")
-                
-            })
-                .buttonStyle(FilledButtonStyle())
-                .padding(.vertical, 24)
+            }
+            .buttonStyle(FilledButtonStyle())
+            .padding(.vertical, 24)
             
             
             // Already have an account? Login

@@ -9,16 +9,27 @@ import Foundation
 import SwiftUI
 
 class UserSettings: ObservableObject {
-    @Published private(set) var fullName = ""
+    @Published private(set) var currentUser: User?
     @Published private(set) var token = ""
     
     init() {
-       lookForUser()
+        lookForUser()
     }
     
     func lookForUser() {
         DispatchQueue.main.async{
             self.token = UserDefaultsManager.getToken()
+            print("Token:", self.token)
+            guard self.token != "" else {return}
+            Webservice.instance.getUserData(token: self.token) { [weak self] res in
+                switch res {
+                    case .success(let user):
+                        self?.currentUser = user
+                        print("Current user:", user)
+                    case .failure(let error):
+                        print("Get user Data error:", error)
+                }
+            }
         }
         
     }

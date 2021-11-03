@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct Goal: View {
-    @StateObject private var vm: GoalViewModel = GoalViewModel()
-    init() {
+    @ObservedObject var vm: SignupViewModel
+    @EnvironmentObject private var userSettingsStorage: UserSettings
+    init(vm: SignupViewModel) {
         UITableView.appearance().backgroundColor = .clear
+        self.vm = vm
     }
     var body: some View {
         VStack {
@@ -25,44 +27,26 @@ struct Goal: View {
             
             
             // Inputs
-            Form {
-                Picker("You want to...", selection: $vm.goal) {
-                    Text("sdas")
+            VStack {
+                NHPicker(title: "You want to...", selection: $vm.goal) {
+                    Text("Loose weight").tag("Loose weight")
+                    Text("Gain weight").tag("Gain weight")
                 }
-                .listRowInsets(EdgeInsets())
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.accentColor.opacity(0.2), lineWidth: 1)
-                )
                 .padding(.vertical)
                 
                 
-                
-                Picker("How many times a day do you eat?", selection: $vm.goal) {
-                    Text("3").tag(1)
-                    Text("4").tag(2)
-                    Text("5").tag(3)
+                NHPicker(title: "How many times a day do you eat?", selection: $vm.mealTimes) {
+                    Text("3").tag("3")
+                    Text("4").tag("4")
+                    Text("5").tag("5")
                 }
-                .listRowInsets(EdgeInsets())
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.accentColor.opacity(0.2), lineWidth: 1)
-                )
                 .padding(.vertical)
                 
-                Picker("How often do you work out", selection: $vm.goal) {
-                    Text("Once a week").tag(1)
-                    Text("Twice a week").tag(2)
-                    Text("Thrice a week").tag(3)
+                NHPicker(title: "How often do you work out?", selection: $vm.workoutTimes) {
+                    Text("Once a week").tag("1")
+                    Text("Twice a week").tag("2")
+                    Text("Thrice a week").tag("3")
                 }
-                .listRowInsets(EdgeInsets())
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.accentColor.opacity(0.2), lineWidth: 1)
-                )
                 .padding(.vertical)
             }
             
@@ -71,7 +55,7 @@ struct Goal: View {
             
             
             Button(action: {
-                
+                vm.proceedSignup(userSettingsStorage: userSettingsStorage)
             }, label: {
                 Text("Proceed")
                 
@@ -90,6 +74,6 @@ struct Goal: View {
 
 struct Goal_Previews: PreviewProvider {
     static var previews: some View {
-        Goal()
+        Goal(vm: SignupViewModel())
     }
 }

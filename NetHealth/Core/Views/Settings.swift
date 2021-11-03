@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct Settings: View {
+    @EnvironmentObject private var usettings: UserSettings
     var body: some View {
         VStack(spacing: 24) {
-            Text("Julia Mario")
+            Text(usettings.currentUser?.fullName ?? "")
                 .font(.title)
                 .bold()
                 .foregroundColor(.accentColor)
-            Text("juliamario@gmail.com")
+            Text(usettings.currentUser?.email ?? "")
                 .font(.caption)
                 .foregroundColor(.accentColor)
             SettingsButton(icon: "person.fill", title: "Account")
