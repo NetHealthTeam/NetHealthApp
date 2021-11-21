@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 extension View {
-    func NHTextFieldStyle() -> some View {
-        self.modifier(NHTextField())
+    func NHTextFieldStyle(isValid: Binding<Bool>) -> some View {
+        self.modifier(NHTextField(isValid: isValid))
     }
 }

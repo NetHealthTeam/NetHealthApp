@@ -15,20 +15,37 @@ struct ContentView: View {
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor(.accentColor)]
     }
     var body: some View {
-        NavigationView {
             if userSettingsStorage.token.isEmpty {
+                NavigationView {
                 Welcome()
                     .navigationTitle("Welcome")
                     .navigationBarHidden(true)
+                }
+                .environmentObject(userSettingsStorage)
+                
             }
             else {
-                Settings()
-                    .navigationTitle("Settings")
-            }
+                TabView {
+                    Home()
+                        .navigationTitle("Home")
+                        .navigationBarHidden(true)
+                        .tabItem {
+                            Image(systemName: "house.fill")
+                        }
+                    
+                    Settings()
+                        .navigationTitle("Settings")
+                        .tabItem {
+                            Image(systemName: "gearshape.fill")
+                        }
+                }
+                .environmentObject(userSettingsStorage)
+            
         }
-        .environmentObject(userSettingsStorage)
-        
+
     }
+    
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

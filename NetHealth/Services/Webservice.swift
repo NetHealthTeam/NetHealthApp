@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum AuthenticationError: Error {
+enum AuthenticationError: Error, Equatable {
     case invalidCredentials
     case custom(errorMessage: String)
 }
@@ -44,6 +44,12 @@ fileprivate struct UserDataResponse: Decodable {
     var value: User?
     var success: Bool?
     var errors: Array<SignupErrorResponse?>?
+}
+
+
+// Get Daily Meat Data
+fileprivate struct DailyMealsResponse: Decodable {
+    var meals: Array<Meal?>
 }
 
 class Webservice {
@@ -94,6 +100,8 @@ class Webservice {
         }
         let body = user
         
+        print(user.actionName)
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -106,6 +114,7 @@ class Webservice {
             }
             
             print(data)
+            print(String(decoding: data, as: UTF8.self))
             guard let signupResponse = try? JSONDecoder().decode(SignupResponse.self, from: data) else {
                 guard let res = response as? HTTPURLResponse else {return}
                 if res.statusCode == 400 {
@@ -116,12 +125,12 @@ class Webservice {
                      "status": 400,
                      "traceId": "00-cd6fdae3b945a44498bc5b7c8482cba2-84432d24d01cf647-00",
                      "errors": {
-                         "Email": [
-                             "empty_email",
-                             "email_not_correct"
-                         ]
+                     "Email": [
+                     "empty_email",
+                     "email_not_correct"
+                     ]
                      }
-                 }*/
+                     }*/
                 }
                 completition(.failure(.invalidCredentials))
                 return
@@ -159,7 +168,7 @@ class Webservice {
                     return
                 }
                 if let responseJSON = utferror as? [String: Any] {
-                        print(responseJSON)
+                    print(responseJSON)
                     completition(.failure(.invalidCredentials))
                 }
                 return
@@ -172,4 +181,30 @@ class Webservice {
         .resume()
     }
     
+    func getDailyDiet(token: String, completition: @escaping (Result<[Meal?], AuthenticationError>) -> Void) {
+        guard let url = URL(string: Constants.SERVER_URL + "/api/diet/getdailydiet") else {
+            completition(.failure(.custom(errorMessage: "URL is not correct")))
+            print("URL ERROR")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data, error == nil else {
+                completition(.failure(.custom(errorMessage: "No data")))
+                return
+            }
+//            print(String(decoding: data, as: UTF8.self))
+
+            guard let dailyMealsResponse = try? JSONDecoder().decode(DailyMealsResponse.self, from: data) else {
+                completition(.failure(.custom(errorMessage: "No meals")))
+                return
+            }
+
+            completition(.success(dailyMealsResponse.meals))
+        }
+        .resume()
+    }
 }

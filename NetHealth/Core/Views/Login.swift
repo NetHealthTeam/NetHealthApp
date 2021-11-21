@@ -26,14 +26,14 @@ struct Login: View {
             // Inputs
             VStack {
                 TextField("Email", text: $vm.email)
-                    .NHTextFieldStyle()
+                    .NHTextFieldStyle(isValid: $vm.isEmailValid)
                     .padding(.bottom, 8)
                 
                 SecureField("Password", text: $vm.password)
                     .padding()
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.accentColor.opacity(0.2), lineWidth: 1)
+                            .stroke(vm.isPasswordValid ? Color.accentColor.opacity(0.2) : Color.red , lineWidth: 1)
                     )
             }
             
@@ -44,9 +44,6 @@ struct Login: View {
                     .font(.callout)
                     .foregroundColor(.accentColor)
             }
-            
-            
-            
             
             Button(action: {
                 vm.proceedLogin(userSettingsStorage: userSettingsStorage)
@@ -76,7 +73,9 @@ struct Login: View {
             Spacer()
         }
         .padding(.horizontal, 24)
-        
+        .alert(vm.errorText, isPresented: $vm.showError) {
+            EmptyView()
+        }
     }
 }
 

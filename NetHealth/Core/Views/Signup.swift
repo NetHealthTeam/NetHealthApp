@@ -22,17 +22,17 @@ struct Signup: View {
             // Inputs
             VStack {
                 TextField("Full Name", text: $vm.fullName)
-                    .NHTextFieldStyle()
+                    .NHTextFieldStyle(isValid: $vm.isFullNameValid)
                     .padding(.bottom, 8)
                 
                 TextField("Email", text: $vm.email)
-                    .NHTextFieldStyle()
+                    .NHTextFieldStyle(isValid: $vm.isEmailValid)
                     .padding(.bottom, 8)
                 
                 
                 TextField("Age", text: $vm.age)
                     .keyboardType(.numberPad)
-                    .NHTextFieldStyle()
+                    .NHTextFieldStyle(isValid: $vm.isAgeValid)
                     .padding(.bottom, 8)
 
                 Picker(selection: $vm.gender) {
@@ -54,14 +54,14 @@ struct Signup: View {
                     .padding()
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.accentColor.opacity(0.2), lineWidth: 1)
+                            .stroke(vm.isPasswordValid ? Color.accentColor.opacity(0.2) : Color.red, lineWidth: 1)
                     )
                 
                 SecureField("Confirm Password", text: $vm.passwordConfirmation)
                     .padding()
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.accentColor.opacity(0.2), lineWidth: 1)
+                            .stroke(vm.isPasswordConfirmationValid ? Color.accentColor.opacity(0.2) : Color.red, lineWidth: 1)
                     )
             }
             
@@ -69,6 +69,7 @@ struct Signup: View {
             NavigationLink(destination: Goal(vm: vm)){
                 Text("Sign Up")
             }
+            .disabled(!vm.isFullNameValid || !vm.isEmailValid || !vm.isAgeValid || !vm.isPasswordValid || !vm.isPasswordConfirmationValid)
             .buttonStyle(FilledButtonStyle())
             .padding(.vertical, 24)
             
@@ -91,6 +92,9 @@ struct Signup: View {
             Spacer()
         }
         .padding(.horizontal, 24)
+        .alert(vm.errorText, isPresented: $vm.showError) {
+            EmptyView()
+        }
     }
 }
 

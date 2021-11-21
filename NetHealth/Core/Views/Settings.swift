@@ -23,6 +23,10 @@ struct Settings: View {
             SettingsButton(icon: "eye.fill", title: "Appearance")
             SettingsButton(icon: "checkerboard.shield", title: "Privacy & Security")
             SettingsButton(icon: "globe.americas.fill", title: "Language")
+            SettingsButton(icon: "lock.fill", title: "Logout", destructive: true)
+                .onTapGesture {
+                    usettings.logout()
+                }
             
             Spacer()
         }
@@ -35,6 +39,7 @@ struct Settings_Previews: PreviewProvider {
         NavigationView {
         Settings()
             .navigationTitle("Settings")
+            .environmentObject(UserSettings())
         }
     }
 }
@@ -43,6 +48,7 @@ struct Settings_Previews: PreviewProvider {
 struct SettingsButton: View {
     var icon: String
     var title: String
+    var destructive: Bool?
     
     var body: some View {
         HStack {
@@ -54,7 +60,7 @@ struct SettingsButton: View {
             Image(systemName: "chevron.right")
                 
         }
-        .foregroundColor(.accentColor.opacity(0.8))
+        .foregroundColor(destructive ?? false ? .red.opacity(0.8) : .accentColor.opacity(0.8))
         .padding(.horizontal)
     }
 }
