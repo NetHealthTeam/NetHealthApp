@@ -18,17 +18,17 @@ struct Home: View {
                     .foregroundColor(.accentColor)
                 Spacer()
                 ScrollView(showsIndicators: false) {
-                    NavigationLink(destination: Diet().toolbar {
-                        ToolbarItem(placement: .principal) {
-                            Text("🍳 Daily Diet Plan!")
-                                .font(.title)
-                                .bold()
-                                .foregroundColor(.accentColor)
-                        }
-                    }) {
+                    NavigationLink(destination: Diet().toolbarWithTitle(title: "🍳 Daily Diet Plan!")) {
                         MenuItem(title: "Your Diet", imageName: "Stomach_diet")
                     }
+                    .frame(height: 150)
                     .padding()
+                    
+                    NavigationLink(destination: Weekdays().toolbarWithTitle(title: "🙃 Choose the Weekday")) {
+                        MenuItem(title: "Your Workout", imageName: "Workout2")
+                    }
+                    .frame(height: 150)
+                    .padding([.horizontal, .bottom])
                 }
             }
             .navigationTitle("Home")
@@ -40,7 +40,7 @@ struct Home: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        Home()
             .environmentObject(UserSettings())
     }
 }

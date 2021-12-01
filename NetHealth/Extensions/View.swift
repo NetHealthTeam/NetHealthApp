@@ -12,4 +12,8 @@ extension View {
     func NHTextFieldStyle(isValid: Binding<Bool>) -> some View {
         self.modifier(NHTextField(isValid: isValid))
     }
+    
+    func toolbarWithTitle(title: String) -> some View {
+        self.modifier(ToolbarWithTitle(title: title))
+    }
 }

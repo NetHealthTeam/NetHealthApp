@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct WorkoutItem: View {
-    var exercise: Exercise
+    var exercise: Exercise?
     var body: some View {
         VStack(alignment: .leading) {
-            AsyncImage(url: URL(string: exercise.imageUrl)) { image in
+            AsyncImage(url: URL(string: exercise?.imageUrl ?? "")) { image in
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -23,16 +23,16 @@ struct WorkoutItem: View {
             
             VStack(alignment: .leading) {
                 VStack(alignment: .leading) {
-                    Text(exercise.name)
+                    Text(exercise?.name ?? "")
                         .font(.title)
                         .bold()
                         .foregroundColor(.accentColor)
                         .padding(.vertical)
                 
-                    Text("Calory burn: **\(exercise.caloriePerHour) cal/hour**")
+                    Text("Calory burn: **\(exercise?.caloriePerHour ?? "") cal/hour**")
                         .font(.body)
                     
-                    Text("Duration: **\(exercise.duration) min**")
+                    Text("Duration: **\(exercise?.duration ?? 0) min**")
                         .font(.body)
                     
                 }

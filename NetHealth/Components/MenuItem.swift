@@ -20,6 +20,8 @@ struct MenuItem: View {
                 .padding(.leading)
             Spacer()
             Image(imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
                 .padding()
         }
         .background(Color.theme.main.cornerRadius(12))
@@ -28,6 +30,6 @@ struct MenuItem: View {
 
 struct MenuItem_Previews: PreviewProvider {
     static var previews: some View {
-        MenuItem(title: "Your Diet", imageName: "Stomach_diet")
+        MenuItem(title: "Your Workout", imageName: "Workout2")
     }
 }

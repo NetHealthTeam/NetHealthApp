@@ -16,4 +16,6 @@ extension Color {
 struct ColorTheme {
     let primary = Color("PrimaryColor")
     let main = Color("MainColor")
+    let messageSent = Color("MessageSent")
+    let messageReceived = Color("MessageReceived")
 }

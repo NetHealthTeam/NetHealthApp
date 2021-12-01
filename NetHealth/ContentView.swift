@@ -33,6 +33,13 @@ struct ContentView: View {
                             Image(systemName: "house.fill")
                         }
                     
+                    Chat()
+                        .navigationTitle("Chat Bot")
+                        .navigationBarHidden(true)
+                        .tabItem {
+                            Image(systemName: "message.fill")
+                        }
+                    
                     Settings()
                         .navigationTitle("Settings")
                         .tabItem {

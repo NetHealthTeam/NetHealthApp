@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct DietItem: View {
-    var meal: Meal
+    var meal: Meal?
     var body: some View {
         HStack {
-            AsyncImage(url: URL(string: meal.imageUrl)) { image in
+            AsyncImage(url: URL(string: meal?.imageUrl ?? "")) { image in
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -23,11 +23,11 @@ struct DietItem: View {
             
             VStack(alignment: .leading) {
                 VStack(alignment: .leading) {
-                    Text("Meal #\(meal.number)")
+                    Text("Meal #\(meal?.number ?? 0)")
                         .font(.title)
                         .bold()
                         .foregroundColor(.accentColor)
-                    Text(meal.name)
+                    Text(meal?.name ?? "")
                         .font(.callout)
                 }
                 .padding()
@@ -36,7 +36,7 @@ struct DietItem: View {
                 
                 HStack {
                     Spacer()
-                    Text("Portion(s): **\(String(meal.portion))**")
+                    Text("Portion(s): **\(String(meal?.portion ?? 0))**")
                         .font(.callout)
                     
                 }

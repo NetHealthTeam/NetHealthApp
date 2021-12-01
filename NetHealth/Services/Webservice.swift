@@ -48,9 +48,28 @@ fileprivate struct UserDataResponse: Decodable {
 
 
 // Get Daily Meat Data
-fileprivate struct DailyMealsResponse: Decodable {
+struct DailyMealsResponse: Decodable {
     var meals: Array<Meal?>
 }
+
+
+// Get Workout Program
+struct WorkoutProgramResponse: Decodable {
+    var exercises: Array<Exercise?>
+}
+
+
+// ChatBot
+struct BotResponse: Decodable {
+    var value: BotValue?
+    var success: Bool
+}
+
+struct BotValue: Decodable {
+    var dietResponse: DailyMealsResponse?
+    var exerciseResponse: WorkoutProgramResponse?
+}
+
 
 class Webservice {
     
@@ -196,14 +215,96 @@ class Webservice {
                 completition(.failure(.custom(errorMessage: "No data")))
                 return
             }
-//            print(String(decoding: data, as: UTF8.self))
-
+            //            print(String(decoding: data, as: UTF8.self))
+            
             guard let dailyMealsResponse = try? JSONDecoder().decode(DailyMealsResponse.self, from: data) else {
                 completition(.failure(.custom(errorMessage: "No meals")))
                 return
             }
-
+            
             completition(.success(dailyMealsResponse.meals))
+        }
+        .resume()
+    }
+    
+    
+    func getWorkoutProgram(token: String, completition: @escaping (Result<[Exercise?], AuthenticationError>) -> Void) {
+        guard let url = URL(string: Constants.SERVER_URL + "/api/gym/getgyminfo") else {
+            completition(.failure(.custom(errorMessage: "URL is not correct")))
+            print("URL ERROR")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data, error == nil else {
+                completition(.failure(.custom(errorMessage: "No data")))
+                return
+            }
+            print("Data in string format: ", String(decoding: data, as: UTF8.self))
+            
+            do{
+                let _ = try JSONDecoder().decode(Array<Exercise?>.self, from: data)
+            }
+            catch let err {
+                print(err)
+            }
+            
+            guard let workoutProgram = try? JSONDecoder().decode(Array<Exercise?>.self, from: data) else {
+                completition(.failure(.custom(errorMessage: "No exercises")))
+                return
+            }
+            
+            completition(.success(workoutProgram))
+        }
+        .resume()
+    }
+    
+     
+    func getAnswer(token: String, question: String, completition: @escaping (Result<BotResponse, AuthenticationError>) -> Void) {
+        struct QuestionBody: Encodable {
+            let question: String
+            
+            enum CodingKeys: String, CodingKey {
+                case question = "text"
+            }
+        }
+        
+        guard let url = URL(string: Constants.SERVER_URL + "/api/chatbox/getinfo") else {
+            completition(.failure(.custom(errorMessage: "URL is not correct")))
+            print("URL ERROR")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try? JSONEncoder().encode(QuestionBody(question: question))
+        
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data, error == nil else {
+                completition(.failure(.custom(errorMessage: "No data")))
+                return
+            }
+            print("Data in string format: ", String(decoding: data, as: UTF8.self))
+            
+            do{
+                let _ = try JSONDecoder().decode(BotResponse.self, from: data)
+            }
+            catch let err {
+                print(err)
+            }
+            
+            guard let botResponse = try? JSONDecoder().decode(BotResponse.self, from: data) else {
+                completition(.failure(.custom(errorMessage: "No botResponse")))
+                return
+            }
+            
+            completition(.success(botResponse))
         }
         .resume()
     }

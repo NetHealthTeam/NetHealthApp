@@ -49,12 +49,10 @@ struct Goal: View {
                 NHPicker(title: "How many times a day do you eat?", selection: $vm.mealTimes) {
                     Text("3").tag("3")
                     Text("4").tag("4")
-                    Text("5").tag("5")
                 }
                 .padding(.bottom)
 
                 NHPicker(title: "How often do you work out?", selection: $vm.workoutTimes) {
-                    Text("Once a week").tag("1")
                     Text("Twice a week").tag("2")
                     Text("Thrice a week").tag("3")
                 }
